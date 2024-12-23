@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const rewardText = document.getElementById('rewardText');
     const segments = 8;
     const segmentAngle = 360 / segments;
+    let spinCount = 0;
 
     for (let i = 0; i < segments; i++) {
         const segment = document.createElement('div');
@@ -14,7 +15,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     spinButton.addEventListener('click', () => {
-        const randomDegree = Math.floor(Math.random() * 360) + 3600; // Spin multiple times
+        spinCount++;
+        let randomDegree;
+
+        if (spinCount === 5) {
+            randomDegree = 3600 + (360 - (360 % segmentAngle)); // Ensure it lands on red
+        } else {
+            randomDegree = Math.floor(Math.random() * 360) + 3600; // Spin multiple times
+        }
+
         wheel.style.transition = 'transform 4s ease-out';
         wheel.style.transform = `rotate(${randomDegree}deg)`;
 
@@ -29,6 +38,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 rewardText.style.display = 'block';
                 rewardText.textContent = `You Lose. Try again!`;
             }
+
+            // Reset the wheel's rotation to ensure smooth animation next time
+            setTimeout(() => {
+                wheel.style.transition = 'none';
+                wheel.style.transform = `rotate(${actualDegree}deg)`;
+                setTimeout(() => {
+                    wheel.style.transition = 'transform 4s ease-out';
+                }, 50);
+            }, 50);
         }, { once: true });
     });
 });

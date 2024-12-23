@@ -43,6 +43,10 @@ body {
     clip-path: polygon(0 0, 100% 0, 100% 100%);
 }
 
+h1 {
+    margin-top: 19px;   
+}
+
 .segment:nth-child(1) { background-color: #ff0000; }
 .segment:nth-child(2) { background-color: #ff7f00; }
 .segment:nth-child(3) { background-color: #ffff00; }
